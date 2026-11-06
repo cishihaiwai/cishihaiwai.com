@@ -112,6 +112,11 @@
      never widen the initial containing block (fixed headers would drift). */
   --slide-x: clamp(10px, 2.6vw, 30px);
   --slide-y: clamp(14px, 3vw, 34px);
+
+  /* Lets height animate to auto (FAQ panel) without JS inline styles.
+     Browsers without support still open/close correctly, just without the
+     smooth height transition. */
+  interpolate-size: allow-keywords;
 }
 
 /* --------------------------------------------------------------------------
@@ -337,6 +342,10 @@ strong {
 
 .text-center {
   text-align: center;
+}
+
+.mx-auto {
+  margin-inline: auto;
 }
 
 .lead {
@@ -794,6 +803,11 @@ strong {
 .nav-toggle svg {
   width: 24px;
   height: 24px;
+}
+
+/* Scroll lock while the mobile drawer is open (class toggled by main.js). */
+body.is-nav-open {
+  overflow: hidden;
 }
 
 .nav-toggle .icon-close {
@@ -2378,9 +2392,15 @@ strong {
 }
 
 .faq__a {
-  max-height: 0;
+  height: 0;
   overflow: hidden;
-  transition: max-height var(--t-base) var(--ease-out);
+  transition: height var(--t-base) var(--ease-out);
+}
+
+/* Chrome/Edge 129+ can interpolate to height:auto, so the panel expands
+   smoothly without JavaScript writing an inline max-height. */
+.faq__item.is-open .faq__a {
+  height: auto;
 }
 
 .faq__a p {
@@ -2388,6 +2408,20 @@ strong {
   margin: 0;
   font-size: var(--fs-sm);
   color: var(--c-steel-600);
+}
+
+/* --------------------------------------------------------------------------
+   22a. SPRITE HOST
+   The fetched sprite is injected into a hidden container so every <use>
+   reference resolves. Styled here (not with inline styles) to keep all
+   presentation inside this single stylesheet.
+   -------------------------------------------------------------------------- */
+.sprite-host {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
 }
 
 /* --------------------------------------------------------------------------
