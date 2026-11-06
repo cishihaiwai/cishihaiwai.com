@@ -2424,6 +2424,12 @@ body.is-nav-open {
   visibility: hidden;
 }
 
+/* The sprite root itself stays out of the layout (its symbols are only
+   referenced through <use>). */
+.sprite-host > svg {
+  display: none;
+}
+
 /* --------------------------------------------------------------------------
    22b. LOCAL FILE:// FALLBACK
    A page opened straight from disk cannot fetch images/sprite.svg (CORS blocks
