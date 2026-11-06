@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#06121f"/>
+      <stop offset="60%" stop-color="#0b1e30"/>
+      <stop offset="100%" stop-color="#123553"/>
+    </linearGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3b8ada"/>
+      <stop offset="70%" stop-color="#7db3e8"/>
+      <stop offset="100%" stop-color="#ffb81c"/>
+    </linearGradient>
+    <linearGradient id="bar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3b8ada"/>
+      <stop offset="100%" stop-color="#0e5291" stop-opacity="0.55"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#bg)"/>
+
+  <!-- faint grid -->
+  <g stroke="#7db3e8" stroke-width="1" opacity="0.08">
+    <path d="M0 100h800M0 180h800M0 260h800M0 340h800M0 420h800"/>
+    <path d="M100 0v500M200 0v500M300 0v500M400 0v500M500 0v500M600 0v500M700 0v500"/>
+  </g>
+
+  <!-- chart panel -->
+  <rect x="58" y="58" width="684" height="330" rx="14" fill="#0b1e30" stroke="#1d3a56" stroke-width="2"/>
+  <rect x="58" y="58" width="684" height="44" rx="14" fill="#0f2b43"/>
+  <rect x="58" y="88" width="684" height="14" fill="#0f2b43"/>
+  <circle cx="84" cy="80" r="5" fill="#ffb81c"/>
+  <circle cx="102" cy="80" r="5" fill="#3b8ada"/>
+  <circle cx="120" cy="80" r="5" fill="#1668b4"/>
+  <rect x="152" y="73" width="96" height="14" rx="7" fill="#1d3a56"/>
+
+  <!-- line chart -->
+  <path d="M92 320 L180 262 L250 288 L330 208 L410 236 L486 168 L566 196 L648 130 L708 154"
+        fill="none" stroke="url(#line)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M92 320 L180 262 L250 288 L330 208 L410 236 L486 168 L566 196 L648 130 L708 154 L708 350 L92 350 Z"
+        fill="#3b8ada" opacity="0.12"/>
+  <g fill="#7db3e8">
+    <circle cx="180" cy="262" r="5"/><circle cx="330" cy="208" r="5"/>
+    <circle cx="486" cy="168" r="5"/><circle cx="648" cy="130" r="6" fill="#ffb81c"/>
+  </g>
+
+  <!-- bars -->
+  <g fill="url(#bar)">
+    <rect x="104" y="300" width="34" height="50" rx="4"/>
+    <rect x="152" y="282" width="34" height="68" rx="4"/>
+    <rect x="200" y="312" width="34" height="38" rx="4"/>
+    <rect x="248" y="268" width="34" height="82" rx="4"/>
+  </g>
+  <rect x="296" y="286" width="34" height="64" rx="4" fill="#ffb81c" opacity="0.8"/>
+
+  <!-- KPI tiles -->
+  <g>
+    <rect x="58" y="410" width="212" height="52" rx="10" fill="#0f2b43" stroke="#1d3a56" stroke-width="2"/>
+    <rect x="78" y="424" width="86" height="9" rx="4.5" fill="#3b8ada" opacity="0.7"/>
+    <rect x="78" y="440" width="130" height="8" rx="4" fill="#1d3a56"/>
+
+    <rect x="294" y="410" width="212" height="52" rx="10" fill="#0f2b43" stroke="#1d3a56" stroke-width="2"/>
+    <rect x="314" y="424" width="108" height="9" rx="4.5" fill="#ffb81c" opacity="0.85"/>
+    <rect x="314" y="440" width="122" height="8" rx="4" fill="#1d3a56"/>
+
+    <rect x="530" y="410" width="212" height="52" rx="10" fill="#0f2b43" stroke="#1d3a56" stroke-width="2"/>
+    <rect x="550" y="424" width="72" height="9" rx="4.5" fill="#7db3e8" opacity="0.8"/>
+    <rect x="550" y="440" width="142" height="8" rx="4" fill="#1d3a56"/>
+  </g>
+</svg>

@@ -1,0 +1,10 @@
+# Local source inputs — kept out of the published repository
+SPEC.txt
+tihuan.txt
+
+# Local build artifact
+choice-overseas-website.zip
+
+# OS / editor noise
+.DS_Store
+Thumbs.db

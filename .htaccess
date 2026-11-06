@@ -1,0 +1,100 @@
+# ==============================================================
+# CHOICE Overseas International Co., Limited
+# Apache / LiteSpeed configuration
+# ==============================================================
+
+# ---------- Canonical host + HTTPS ----------
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Force HTTPS (except when the server is already behind an SSL terminator)
+    RewriteCond %{HTTPS} !=on
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Force the canonical host (www -> apex)
+    RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+    RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+
+    # index.html -> / (canonical, 301)
+    RewriteCond %{THE_REQUEST} \s/+(.*/)?index\.html[\s?] [NC]
+    RewriteRule ^ /%1 [L,R=301]
+</IfModule>
+
+# ---------- Default document ----------
+DirectoryIndex index.html
+<IfModule mod_dir.c>
+    DirectoryIndex index.html
+</IfModule>
+
+# ---------- Custom 404 ----------
+ErrorDocument 404 /404.html
+
+<IfModule mod_mime.c>
+    AddType application/xml .xml
+    AddType text/xml .xml
+    AddType text/css .css
+    AddType application/javascript .js
+    AddType image/svg+xml .svg
+    AddType image/jpeg .jpg .jpeg
+    AddType image/webp .webp
+    AddType image/x-icon .ico
+    AddType text/plain .txt
+</IfModule>
+
+# ---------- Compression ----------
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
+    AddOutputFilterByType DEFLATE application/xml application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript text/javascript
+    AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+<IfModule mod_brotli.c>
+    AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml text/css
+    AddOutputFilterByType BROTLI_COMPRESS application/xml application/javascript
+    AddOutputFilterByType BROTLI_COMPRESS image/svg+xml
+</IfModule>
+
+# ---------- Cache headers ----------
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault                          "access plus 1 month"
+    ExpiresByType text/html                 "access plus 1 hour"
+    ExpiresByType text/css                  "access plus 1 year"
+    ExpiresByType application/javascript    "access plus 1 year"
+    ExpiresByType application/xml           "access plus 1 year"
+    ExpiresByType image/svg+xml             "access plus 1 year"
+    ExpiresByType image/png                 "access plus 1 year"
+    ExpiresByType image/jpeg                "access plus 1 year"
+    ExpiresByType image/webp                "access plus 1 year"
+    ExpiresByType image/x-icon              "access plus 1 year"
+    ExpiresByType font/woff2                "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+    <FilesMatch "\.(css|js|svg|png|jpe?g|webp|gif|ico|woff2?)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+
+    <FilesMatch "\.(html|xml|txt)$">
+        Header set Cache-Control "public, max-age=3600, must-revalidate"
+    </FilesMatch>
+
+    # Security headers
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
+
+# ---------- HSTS (only once HTTPS is confirmed working) ----------
+<IfModule mod_headers.c>
+    <FilesMatch "\.(html)$">
+        Header set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+    </FilesMatch>
+</IfModule>
+
+# ---------- MIME / charset ----------
+AddDefaultCharset UTF-8
